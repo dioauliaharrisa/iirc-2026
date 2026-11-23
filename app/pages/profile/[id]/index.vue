@@ -68,6 +68,50 @@ parser2.parse().then((data) => {
   profile2.value = filtered;
 });
 
+// Every table this player sat at, per hanchan (same data as table-result, no photos)
+const parser3 = new PublicGoogleSheetsParser(
+  "1dL4cYaN3_5p7RGndKyIg14YcEwwcZSMedk5-QCJfMBE",
+  { sheetName: "Display_Match_Up", useFormat: true }
+);
+
+type MatchPlayer = { id: string; name: string; score: string };
+const matches = ref<{ label: string; table: string; players: MatchPlayer[] }[]>(
+  []
+);
+
+const generateTableName = (i: number, label: string) => {
+  if (i === 0 && (label === "Hanchan 9" || label === "Hanchan 10"))
+    return "Semi Final Table 1";
+  if (i === 1 && (label === "Hanchan 9" || label === "Hanchan 10"))
+    return "Semi Final Table 2";
+  if (i === 0 && (label === "Hanchan 11" || label === "Hanchan 12"))
+    return "Final Table 1";
+  if (i === 1 && (label === "Hanchan 11" || label === "Hanchan 12"))
+    return "Final Table 2";
+  return `Table ${i + 1}`;
+};
+
+parser3.parse().then((data) => {
+  const result: { label: string; table: string; players: MatchPlayer[] }[] =
+    [];
+  data.forEach((row, index) => {
+    const label = `Hanchan ${index + 1}`;
+    Object.values(row).forEach((value, i) => {
+      const parts = String(value)
+        .split(",")
+        .map((v) => v.trim());
+      const players: MatchPlayer[] = [];
+      for (let p = 0; p + 2 < parts.length; p += 3) {
+        players.push({ id: parts[p], name: parts[p + 1], score: parts[p + 2] });
+      }
+      if (!players.some((p) => p.id === id)) return;
+      players.sort((a, b) => Number(b.score) - Number(a.score));
+      result.push({ label, table: generateTableName(i, label), players });
+    });
+  });
+  matches.value = result;
+});
+
 const excludeKeys = [
   "id",
   "firstTotal",
@@ -134,8 +178,9 @@ const formatKey = (key: string) =>
         />
       </div>
     </div>
+    <!-- Charts hidden for now
     <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4">
-      <!-- Chart 1 -->
+      Chart 1
       <div class="snap-center shrink-0 w-full">
         <div class="">
           <LineChart
@@ -163,10 +208,9 @@ const formatKey = (key: string) =>
           </LineChart>
         </div>
       </div>
-      <!-- Chart 2 -->
+      Chart 2
       <div class="snap-center shrink-0 w-full">
         <div class="">
-          <!-- :y-num-ticks="4" -->
           <LineChart
             :data="profile?.chartData2"
             :height="250"
@@ -187,6 +231,7 @@ const formatKey = (key: string) =>
         </div>
       </div>
     </div>
+    -->
     <div class="flex flex-col items-center bg-[#99484c] p-4 text-white">
       <h3 class="text-xl font-semibold">Total Ranking</h3>
       <p class="text-lg font-semibold">
@@ -195,6 +240,7 @@ const formatKey = (key: string) =>
         }}
       </p>
     </div>
+    <!-- Stat cards hidden for now
     <div class="grid grid-cols-3 gap-2 p-4">
       <UCard
         v-for="(value, key) in filteredProfile"
@@ -217,6 +263,37 @@ const formatKey = (key: string) =>
           </p>
         </div>
       </UCard>
+    </div>
+    -->
+    <div class="flex flex-col gap-4 px-4 pb-4">
+      <div
+        v-for="match in matches"
+        :key="match.label"
+        class="flex flex-col border border-secondary"
+      >
+        <div class="bg-secondary px-2 py-1 text-white font-semibold">
+          {{ match.label }}
+        </div>
+        <div class="bg-[#99484c]">
+          <h5 class="p-2 text-lg font-semibold text-white">
+            {{ match.table }}
+          </h5>
+        </div>
+        <div
+          v-for="player in match.players"
+          :key="player.id"
+          class="p-2 flex items-center gap-4 justify-between"
+          :class="player.id === id ? 'bg-gray-200 font-semibold' : ''"
+        >
+          <p
+            class="cursor-pointer"
+            @click="$router.push(`/profile/${player.id}`)"
+          >
+            {{ player.name }}
+          </p>
+          <p class="font-semibold">{{ player.score }}</p>
+        </div>
+      </div>
     </div>
   </div>
   <UBanner class="h-[50px]" title="End of the table" />
