@@ -43,57 +43,35 @@ const columns = [
     accessorKey: "urlPhoto",
     header: "Name",
     cell: ({ row }) => {
-      const isSpecialRow = row.index === 8;
-
-      if (isSpecialRow) {
-        return h("div", { class: "flex flex-col gap-2" }, [
-          h(
-            "div",
-            {
-              class: "flex items-center gap-3 h-16",
-            },
-            [
-              h("div", undefined, [
-                h(
-                  "p",
-                  { class: "font-medium text-highlighted" },
-                  row.original.name
-                ),
-              ]),
-            ]
-          ),
-        ]);
-      } else {
-        return h(
-          "div",
-          {
-            class: "flex items-center gap-3 max-w-96",
-            onClick: () => router.push(`/profile/${row.original.playerID}`),
-          },
-          [
-            h("div", { class: "flex flex-col" }, [
-              h("div", { class: "flex items-center gap-2" }, [
-                h(
-                  "p",
-                  { class: "font-medium text-highlighted whitespace-normal" },
-                  row.original.name
-                ),
-                // h(
-                //   "p",
-                //   { class: "font-medium text-highlighted" },
-                //   `${medal(row.original?.no)}`
-                // ),
-              ]),
-              h(NuxtImg, {
-                src: `https://purecatamphetamine.github.io/country-flag-icons/3x2/${row.original?.country}.svg`,
-                class: "w-8 h-6 object-cover border border-gray-200",
-                alt: row.original.name,
-                format: "webp",
-              }),
+      return h(
+        "div",
+        {
+          class: "flex items-center gap-3 max-w-96",
+          onClick: () => router.push(`/profile/${row.original.playerID}`),
+        },
+        [
+          h("div", { class: "flex flex-col" }, [
+            h("div", { class: "flex items-center gap-2" }, [
+              h(
+                "p",
+                { class: "font-medium text-highlighted whitespace-normal" },
+                row.original.name
+              ),
+              // h(
+              //   "p",
+              //   { class: "font-medium text-highlighted" },
+              //   `${medal(row.original?.no)}`
+              // ),
             ]),
-          ]
-        );
-      }
+            h(NuxtImg, {
+              src: `https://purecatamphetamine.github.io/country-flag-icons/3x2/${row.original?.country}.svg`,
+              class: "w-8 h-6 object-cover border border-gray-200",
+              alt: row.original.name,
+              format: "webp",
+            }),
+          ]),
+        ]
+      );
     },
   },
   {
