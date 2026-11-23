@@ -164,11 +164,6 @@ const formatKey = (key: string) =>
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex gap-4 p-4 bg-[#99484c] text-white items-center">
-      <UAvatar
-        :src="profile?.urlPicture"
-        alt="Benjamin Canac"
-        class="w-18 h-18"
-      />
       <div class="flex flex-col gap-2">
         <div class="text-xl font-semibold">{{ profile?.name }}</div>
         <NuxtImg

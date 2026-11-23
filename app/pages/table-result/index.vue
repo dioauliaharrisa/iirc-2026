@@ -1,6 +1,5 @@
 <script setup lang="ts">
 // import type { AccordionItem } from "@nuxt/ui";
-import photos from "../../../codeUrlPhoto.json";
 import PublicGoogleSheetsParser from "public-google-sheets-parser";
 
 const options = { sheetName: "Display_Match_Up", useFormat: true };
@@ -21,7 +20,6 @@ parser.parse().then((data) => {
           id: parts[i],
           name: parts[i + 1],
           score: parts[i + 2],
-          urlPhoto: photos[parts[i]] || null,
         });
       }
       grouped.sort((a, b) => b.score - a.score);
@@ -72,11 +70,6 @@ const generateTableName = (i, label) => {
             :key="ii"
             class="p-2 flex items-center gap-4 justify-between"
           >
-            <UAvatar
-              :src="each.urlPhoto"
-              alt="Benjamin Canac"
-              class="w-18 h-18"
-            />
             <p @click="$router.push(`profile/${each.id}`)" class="flex-start">
               {{ each.name }}
             </p>

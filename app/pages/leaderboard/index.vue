@@ -9,14 +9,8 @@ const parser = new PublicGoogleSheetsParser(
 const items = ref<{ [key: string]: string }[]>([]);
 
 parser.parse().then((data) => {
-  items.value = data.map((item) => {
-    return {
-      ...item,
-      urlPhoto: item.urlPhoto,
-    };
-  });
+  items.value = data;
 });
-const UAvatar = resolveComponent("UAvatar");
 
 const router = useRouter();
 
@@ -77,10 +71,6 @@ const columns = [
             onClick: () => router.push(`/profile/${row.original.playerID}`),
           },
           [
-            h(UAvatar, {
-              src: row.original.urlPhoto,
-              size: "3xl",
-            }),
             h("div", { class: "flex flex-col" }, [
               h("div", { class: "flex items-center gap-2" }, [
                 h(
