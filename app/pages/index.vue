@@ -1,11 +1,10 @@
 <script setup lang="ts">
+// Sponsor logos for the scrolling strip (files in public/logos).
 const images = [
-  { name: "Logo RC", src: "/Logo RC.png" },
-  { name: "Logo Kyou BHitam", src: "/Logo_Kyou_BHitam.png" },
-  // { name: "Riichi id", src: "/Riichi id.jpeg" },
-  { name: "Toko mahjong", src: "/Toko mahjong.jpg" },
-  { name: "雀友LOGO", src: "/雀友LOGO.jpg" },
-  { name: "Ynsnobg", src: "Ynsnobg.png" },
+  { name: "Riichi City", src: "/logos/riichi-city.png" },
+  { name: "Toko Mahjong", src: "/logos/toko-mahjong.svg" },
+  { name: "XTEN", src: "/logos/xten.svg" },
+  { name: "Treyo", src: "/logos/treyo.svg" },
 ];
 // Bold rows are the non-game items (registration, breaks, ceremonies).
 const schedule = [
@@ -44,7 +43,11 @@ const schedule = [
 
 <template>
   <div class="">
-    <NuxtImg class="p-8 w-[50vh]" :src="'/Iirc no background.png'" />
+    <img
+      class="mx-auto block w-[min(50vh,80vw)] p-8"
+      src="/logos/iirc.svg"
+      alt="IIRC"
+    />
     <div class="p-4 text-center text-3xl font-semibold leading-tight">
       <p class="text-blue-900">
         Indonesia <span class="text-red-800">International</span>
@@ -96,9 +99,10 @@ const schedule = [
       </div>
     </div>
     <div class="flex justify-center">
-      <NuxtImg
-        src="/Riichi ID white background.png"
-        class="w-24 h-24 object-contain"
+      <img
+        src="/logos/riichi-indonesia.svg"
+        alt="Riichi Indonesia"
+        class="w-24 h-24 object-contain p-2"
       />
       <NuxtImg src="/clue logo high res.png" class="w-24 h-24 object-contain" />
     </div>
@@ -113,11 +117,7 @@ const schedule = [
         :key="i"
         class="flex flex-col items-center"
       >
-        <NuxtImg
-          :src="img.src"
-          :alt="img.name"
-          class="w-16 h-16 object-contain"
-        />
+        <img :src="img.src" :alt="img.name" class="h-16 w-24 object-contain" />
       </div>
     </UMarquee>
     <UBanner class="h-[50px]" title=" " />
