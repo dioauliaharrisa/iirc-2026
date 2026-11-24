@@ -7,35 +7,39 @@ const images = [
   { name: "雀友LOGO", src: "/雀友LOGO.jpg" },
   { name: "Ynsnobg", src: "Ynsnobg.png" },
 ];
+// Bold rows are the non-game items (registration, breaks, ceremonies).
 const schedule = [
   {
-    day: "Saturday, 6 December 2025",
+    day: "Saturday, 5 December 2026",
     items: [
-      ["08:30 - 08:50", "Registration"],
-      ["08:50 - 09:00", "Opening Speech"],
-      ["09:00 - 10:30", "1st Hanchan"],
-      ["10:30 - 12:00", "2nd Hanchan"],
-      ["12:00 - 13:30", "3rd Hanchan"],
-      ["13:30 - 14:30", "Lunch Break"],
-      ["14:30 - 16:00", "4th Hanchan"],
-      ["16:00 - 17:30", "5th Hanchan"],
-      ["17:30 - 19:00", "6th Hanchan"],
+      ["08:30 - 08:50", "Registration", true],
+      ["08:50 - 09:00", "Opening Speech", true],
+      ["09:00 - 10:15", "1st Hanchan"],
+      ["10:15 - 11:30", "2nd Hanchan"],
+      ["11:30 - 12:30", "Lunch Break", true],
+      ["12:30 - 13:45", "3rd Hanchan"],
+      ["13:45 - 15:00", "4th Hanchan"],
+      ["15:00 - 16:15", "5th Hanchan"],
+      ["16:15 - 17:30", "6th Hanchan"],
+      ["17:30 - 18:30", "Dinner Break", true],
+      ["18:30 - 19:45", "7th Hanchan"],
+      ["19:45 - 21:00", "8th Hanchan"],
     ],
   },
   {
-    day: "Sunday, 7 December 2025",
+    day: "Sunday, 6 December 2026",
     items: [
-      ["09:00 - 10:30", "7th Hanchan"],
-      ["10:30 - 12:00", "8th Hanchan"],
-      ["12:00 - 13:00", "Lunch Break"],
-      ["13:30 - 14:30", "9th Hanchan"],
-      ["14:30 - 16:00", "10th Hanchan"],
-      ["16:00 - 17:30", "11th Hanchan"],
-      ["17:30 - 19:00", "12th Hanchan"],
-      ["19:00 - 19:30", "Closing Ceremony"],
+      ["09:00 - 10:15", "9th Hanchan"],
+      ["10:15 - 11:30", "10th Hanchan"],
+      ["11:30 - 12:30", "Lunch Break", true],
+      ["12:30 - 13:45", "Semi-Final 1"],
+      ["13:45 - 15:00", "Semi-Final 2"],
+      ["15:00 - 16:15", "Final 1"],
+      ["16:15 - 17:30", "Final 2"],
+      ["17:30 - 18:00", "Closing Ceremony", true],
     ],
   },
-];
+] as { day: string; items: [string, string, boolean?][] }[];
 </script>
 
 <template>
@@ -46,7 +50,7 @@ const schedule = [
         Indonesia <span class="text-red-800">International</span>
       </p>
       <p class="text-blue-900">Riichi Championship</p>
-      <p class="text-red-800 font-bold">2025</p>
+      <p class="text-red-800 font-bold">2026</p>
     </div>
     <div
       class="grid grid-rows-2 grid-cols-2 place-items-center bg-secondary h-[20vh] text-white font-bold text-xl"
@@ -72,16 +76,8 @@ const schedule = [
                 class="grid grid-cols-2 gap-x-6 gap-y-2 bg-gray-100 p-4 text-gray-900"
               >
                 <template v-for="(item, i) in day.items" :key="i">
-                  <div>{{ item[0] }}</div>
-                  <div>
-                    <span
-                      v-html="
-                        item[1].includes('Hanchan')
-                          ? item[1]
-                          : `<b>${item[1]}</b>`
-                      "
-                    ></span>
-                  </div>
+                  <div :class="{ 'font-bold': item[2] }">{{ item[0] }}</div>
+                  <div :class="{ 'font-bold': item[2] }">{{ item[1] }}</div>
                 </template>
               </div>
             </div>
