@@ -80,10 +80,6 @@ const matches = ref<{ label: string; table: string; players: MatchPlayer[] }[]>(
 );
 
 const generateTableName = (i: number, label: string) => {
-  if (i === 0 && (label === "Hanchan 9" || label === "Hanchan 10"))
-    return "Semi Final Table 1";
-  if (i === 1 && (label === "Hanchan 9" || label === "Hanchan 10"))
-    return "Semi Final Table 2";
   if (i === 0 && (label === "Hanchan 11" || label === "Hanchan 12"))
     return "Final Table 1";
   if (i === 1 && (label === "Hanchan 11" || label === "Hanchan 12"))
