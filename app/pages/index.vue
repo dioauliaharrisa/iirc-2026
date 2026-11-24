@@ -5,6 +5,7 @@ const images = [
   { name: "Toko Mahjong", src: "/logos/toko-mahjong.svg" },
   { name: "XTEN", src: "/logos/xten.svg" },
   { name: "Treyo", src: "/logos/treyo.svg" },
+  { name: "CLUE Board Game Cafe", src: "/clue logo high res.png" },
 ];
 // Bold rows are the non-game items (registration, breaks, ceremonies).
 const schedule = [
@@ -103,9 +104,7 @@ const schedule = [
         src="/logos/riichi-indonesia.svg"
         alt="Riichi Indonesia"
         class="w-24 h-24 object-contain p-2"
-      />
-      <NuxtImg src="/clue logo high res.png" class="w-24 h-24 object-contain" />
-    </div>
+      />    </div>
     <UMarquee
       pause-on-hover
       reverse
