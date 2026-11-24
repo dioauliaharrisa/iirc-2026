@@ -29,11 +29,9 @@ export function parseTablePlayers(cell: unknown): TablePlayer[] {
   return players;
 }
 
-/** Highest score first; players without a score keep their seat order. */
-export function sortByScore(players: TablePlayer[]): TablePlayer[] {
-  const hasScores = players.some((p) => p.score !== "" && !isNaN(Number(p.score)));
-  if (!hasScores) return players;
-  return [...players].sort(
-    (a, b) => (Number(b.score) || 0) - (Number(a.score) || 0)
-  );
-}
+/**
+ * Seat winds in sheet order: the 1st player listed sits East, then South,
+ * West, North. Players are always shown in this seat order, not by score.
+ */
+export const SEATS = ["E", "S", "W", "N"] as const;
+export const seatOf = (index: number) => SEATS[index] ?? "";

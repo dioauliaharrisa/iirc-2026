@@ -13,7 +13,7 @@ parser.parse().then((data) => {
     label: `Hanchan ${index + 1}`,
     content: Object.entries(row).map(([key, value]) => ({
       key,
-      grouped: sortByScore(parseTablePlayers(value)),
+      grouped: parseTablePlayers(value),
     })),
   }));
 });
@@ -57,9 +57,18 @@ const generateTableName = (i, label) => {
           <div
             v-for="(each, ii) in entry.grouped"
             :key="ii"
-            class="p-2 flex items-center gap-4 justify-between"
+            class="p-2 flex items-center gap-3"
           >
-            <p @click="$router.push(`profile/${each.id}`)" class="flex-start">
+            <span
+              class="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-sm font-bold text-white"
+              :title="`Seat ${seatOf(ii)}`"
+            >
+              {{ seatOf(ii) }}
+            </span>
+            <p
+              @click="$router.push(`profile/${each.id}`)"
+              class="flex-1 cursor-pointer"
+            >
               {{ each.name }}
             </p>
             <p class="font-semibold">{{ each.score }}</p>

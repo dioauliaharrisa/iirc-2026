@@ -102,7 +102,7 @@ parser3.parse().then((data) => {
       result.push({
         label,
         table: generateTableName(i, label),
-        players: sortByScore(players),
+        players,
       });
     });
   });
@@ -272,13 +272,19 @@ const formatKey = (key: string) =>
           </h5>
         </div>
         <div
-          v-for="player in match.players"
+          v-for="(player, seat) in match.players"
           :key="player.id"
-          class="p-2 flex items-center gap-4 justify-between"
+          class="p-2 flex items-center gap-3"
           :class="player.id === id ? 'bg-gray-200 font-semibold' : ''"
         >
+          <span
+            class="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-sm font-bold text-white"
+            :title="`Seat ${seatOf(seat)}`"
+          >
+            {{ seatOf(seat) }}
+          </span>
           <p
-            class="cursor-pointer"
+            class="flex-1 cursor-pointer"
             @click="$router.push(`/profile/${player.id}`)"
           >
             {{ player.name }}
