@@ -74,7 +74,7 @@ const parser3 = new PublicGoogleSheetsParser(
   { sheetName: "Display_Match_Up", useFormat: true }
 );
 
-type MatchPlayer = { id: string; name: string; score: string };
+type MatchPlayer = TablePlayer;
 const matches = ref<{ label: string; table: string; players: MatchPlayer[] }[]>(
   []
 );
@@ -97,16 +97,13 @@ parser3.parse().then((data) => {
   data.forEach((row, index) => {
     const label = `Hanchan ${index + 1}`;
     Object.values(row).forEach((value, i) => {
-      const parts = String(value)
-        .split(",")
-        .map((v) => v.trim());
-      const players: MatchPlayer[] = [];
-      for (let p = 0; p + 2 < parts.length; p += 3) {
-        players.push({ id: parts[p], name: parts[p + 1], score: parts[p + 2] });
-      }
+      const players = parseTablePlayers(value);
       if (!players.some((p) => p.id === id)) return;
-      players.sort((a, b) => Number(b.score) - Number(a.score));
-      result.push({ label, table: generateTableName(i, label), players });
+      result.push({
+        label,
+        table: generateTableName(i, label),
+        players: sortByScore(players),
+      });
     });
   });
   matches.value = result;

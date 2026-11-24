@@ -11,21 +11,10 @@ const items = ref<{ [key: string]: string }[]>([]);
 parser.parse().then((data) => {
   items.value = data.map((row, index) => ({
     label: `Hanchan ${index + 1}`,
-    content: Object.entries(row).map(([key, value]) => {
-      const parts = value.split(",").map((v) => v.trim());
-
-      const grouped = [];
-      for (let i = 0; i < parts.length; i += 3) {
-        grouped.push({
-          id: parts[i],
-          name: parts[i + 1],
-          score: parts[i + 2],
-        });
-      }
-      grouped.sort((a, b) => b.score - a.score);
-
-      return { key, grouped };
-    }),
+    content: Object.entries(row).map(([key, value]) => ({
+      key,
+      grouped: sortByScore(parseTablePlayers(value)),
+    })),
   }));
 });
 const active = ref(["0"]);
