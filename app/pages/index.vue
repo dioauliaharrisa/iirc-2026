@@ -62,17 +62,10 @@ const schedule = [
 <template>
   <div class="">
     <img
-      class="mx-auto block w-[min(50vh,80vw)] p-8"
-      src="/logos/iirc.svg"
-      alt="IIRC"
+      class="mx-auto block w-[min(60vh,90vw)] p-6"
+      src="/logos/iirc.png"
+      alt="Indonesia International Riichi Championship 2026"
     />
-    <div class="p-4 text-center text-3xl font-semibold leading-tight">
-      <p class="text-blue-900">
-        Indonesia <span class="text-red-800">International</span>
-      </p>
-      <p class="text-blue-900">Riichi Championship</p>
-      <p class="text-red-800 font-bold">2026</p>
-    </div>
     <div
       class="grid grid-rows-2 grid-cols-2 place-items-center bg-secondary h-[20vh] text-white font-bold text-xl"
     >
