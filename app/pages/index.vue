@@ -1,11 +1,28 @@
 <script setup lang="ts">
-// Sponsor logos for the scrolling strip (files in public/logos).
-const images = [
-  { name: "Riichi City", src: "/logos/riichi-city.png" },
-  { name: "Toko Mahjong", src: "/logos/toko-mahjong.svg" },
-  { name: "XTEN", src: "/logos/xten.svg" },
-  { name: "Treyo", src: "/logos/treyo.svg" },
-  { name: "CLUE Board Game Cafe", src: "/clue logo high res.png" },
+// Logo rows under the menu (files in public/logos).
+const sponsorGroups = [
+  {
+    label: "Organized by",
+    size: "h-24 w-24",
+    logos: [{ name: "Riichi Indonesia", src: "/logos/riichi-indonesia.svg" }],
+  },
+  {
+    label: "Mainly sponsored by",
+    size: "h-24 w-40",
+    logos: [
+      { name: "Toko Mahjong", src: "/logos/toko-mahjong.svg" },
+      { name: "Riichi City", src: "/logos/riichi-city.png" },
+    ],
+  },
+  {
+    label: "Supported by",
+    size: "h-14 w-24",
+    logos: [
+      { name: "XTEN", src: "/logos/xten.svg" },
+      { name: "Treyo", src: "/logos/treyo.svg" },
+      { name: "CLUE Board Game Cafe", src: "/clue logo high res.png" },
+    ],
+  },
 ];
 // Bold rows are the non-game items (registration, breaks, ceremonies).
 const schedule = [
@@ -99,26 +116,23 @@ const schedule = [
         Top 8 Leaderboard
       </div>
     </div>
-    <div class="flex justify-center">
-      <img
-        src="/logos/riichi-indonesia.svg"
-        alt="Riichi Indonesia"
-        class="w-24 h-24 object-contain p-2"
-      />    </div>
-    <UMarquee
-      pause-on-hover
-      reverse
-      :overlay="false"
-      :ui="{ root: '[--gap:--spacing(4)]', content: 'w-auto py-1' }"
-    >
-      <div
-        v-for="(img, i) in images"
-        :key="i"
-        class="flex flex-col items-center"
-      >
-        <img :src="img.src" :alt="img.name" class="h-16 w-24 object-contain" />
+    <div class="flex flex-col gap-6 px-4 py-6 text-center">
+      <div v-for="group in sponsorGroups" :key="group.label">
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary">
+          {{ group.label }}
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <img
+            v-for="logo in group.logos"
+            :key="logo.name"
+            :src="logo.src"
+            :alt="logo.name"
+            :class="group.size"
+            class="object-contain"
+          />
+        </div>
       </div>
-    </UMarquee>
+    </div>
     <UBanner class="h-[50px]" title=" " />
   </div>
 </template>
